@@ -2,19 +2,16 @@ const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const TodoTask = require('./models/TodoTask')
 
 dotenv.config()
 
 app.use('/static', express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 
-//connection to db
-mongoose.set('userFindAndModify', false)
-
-mongoose.connect(process.env.DB_CONNECT, { useNewUrlParse: true }, () => {
-  console.log('connected to db!')
-
-  app.listen(3333, () => console.log('Serve up and running'))
+mongoose.connect(process.env.DB_CONNECT, { useNewUrlParser: true }, () => {
+  console.log('Connected to db!')
+  app.listen(3333, () => console.log('Server Up and running'))
 })
 
 //view engine configuration
@@ -28,5 +25,3 @@ app.get('/', (request, response) => {
 app.post('/', (request, response) => {
   console.log(request.body)
 })
-
-app.listen(3333, () => console.log('Server up and running'))
