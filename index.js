@@ -22,6 +22,14 @@ app.get('/', (request, response) => {
 })
 
 // POST method
-app.post('/', (request, response) => {
-  console.log(request.body)
+app.post('/', async (request, response) => {
+  const TodoTask = new TodoTask({
+    content: request.body.content
+  })
+  try {
+    await TodoTask.save()
+    response.redirect('/')
+  } catch (e) {
+    response.redirect('/')
+  }
 })
